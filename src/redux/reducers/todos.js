@@ -3,13 +3,17 @@ import _ from "underscore";
 
 var DEFAULT_STATE = {
   tabs: 'messages',
-  page: null
+  page: null,
+  tasks: [
+    
+  ]
 }
 
 export var ACTIONS = defineAction('LOG', [
   'CLICKED', 
   'ON_PAGE'
 ]);
+
 export var actions = {
   clickedTab: (key) => {
     return {

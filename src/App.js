@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { actions as todosActions } from './redux/reducers/todos';
+
 import './App.css';
 import "./assets/css/customize.css";
 import "antd/dist/antd.css";
@@ -52,4 +55,23 @@ class App extends Component {
   }
 }
 
-export default App;
+var mapStateToProps = ({ todos }) => {
+  console.log(todos);
+  
+  return {
+    // me: apis2.me,
+  }
+}
+
+var mapDispatchToProps = function (dispatch) {
+  return {
+    // getMessages: function (data) {
+    //   return dispatch(apis2Actions.getMessages(data));
+    // },
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
