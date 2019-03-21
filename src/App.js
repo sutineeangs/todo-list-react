@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import "./assets/css/customize.css";
 import "antd/dist/antd.css";
 
 import NavSider from "./components/NavSider"
@@ -14,21 +15,35 @@ class App extends Component {
 
     this.state = {
       collapsed: false,
+      selectedMenu: "Overview"
     };
 
     this.onCollapse = this.onCollapse.bind(this)
+    this.selectMenu = this.selectMenu.bind(this)
   }
 
   onCollapse(collapsed) {
     this.setState({ collapsed });
   }
 
+  selectMenu(info) {
+    console.log(info.key)
+    this.setState({ selectedMenu: info.key });
+  }
+
   render() {
     let me = this
     return (
       <Layout style={{ minHeight: '100vh' }}>
-        <NavSider collapsed={this.state.collapsed} onCollapse={(e) => { me.onCollapse(e) }} />
-        <Main collapsed={this.state.collapsed} />
+        <NavSider
+          collapsed={this.state.collapsed}
+          onCollapse={(e) => { me.onCollapse(e) }}
+          selectedMenu={this.state.selectedMenu}
+          selectMenu={(e) => { me.selectMenu(e) }} />
+        <Main
+          collapsed={this.state.collapsed}
+          selectedMenu={()=>{ return this.state.selectedMenu }}
+        />
       </Layout>
     );
   }

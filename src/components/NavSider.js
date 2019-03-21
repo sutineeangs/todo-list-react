@@ -7,10 +7,6 @@ const SubMenu = Menu.SubMenu;
 
 class NavSider extends Component {
 
-  onCollapse(collapsed) {
-    this.setState({ collapsed });
-  }
-
   render() {
     return (
       <Sider
@@ -21,15 +17,15 @@ class NavSider extends Component {
           overflow: 'auto', height: '100vh', position: 'fixed', left: 0,
         }}
       >
-        <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1">
+        <div className="logo">Todo List</div>
+        <Menu theme="dark" defaultSelectedKeys={[this.props.selectedMenu]} mode="inline" onClick={this.props.selectMenu}>
+          <Menu.Item key="Overview">
             <Icon type="pie-chart" />
-            <span>Option 1</span>
+            <span>Overview</span>
           </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="desktop" />
-            <span>Option 2</span>
+          <Menu.Item key="Tasks">
+            <Icon type="profile" />
+            <span>Tasks</span>
           </Menu.Item>
           <SubMenu
             key="sub1"
@@ -37,7 +33,6 @@ class NavSider extends Component {
           >
             <Menu.Item key="3">Tom</Menu.Item>
             <Menu.Item key="4">Bill</Menu.Item>
-            <Menu.Item key="5">Alex</Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub2"
@@ -46,9 +41,9 @@ class NavSider extends Component {
             <Menu.Item key="6">Team 1</Menu.Item>
             <Menu.Item key="8">Team 2</Menu.Item>
           </SubMenu>
-          <Menu.Item key="9">
-            <Icon type="file" />
-            <span>File</span>
+          <Menu.Item key="Setting">
+            <Icon type="setting" />
+            <span>Setting</span>
           </Menu.Item>
         </Menu>
       </Sider>
