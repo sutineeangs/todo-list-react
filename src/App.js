@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
 import './App.css';
 import "./assets/css/customize.css";
 import "antd/dist/antd.css";
@@ -27,24 +29,25 @@ class App extends Component {
   }
 
   selectMenu(info) {
-    console.log(info.key)
     this.setState({ selectedMenu: info.key });
   }
 
   render() {
     let me = this
     return (
-      <Layout style={{ minHeight: '100vh' }}>
-        <NavSider
-          collapsed={this.state.collapsed}
-          onCollapse={(e) => { me.onCollapse(e) }}
-          selectedMenu={this.state.selectedMenu}
-          selectMenu={(e) => { me.selectMenu(e) }} />
-        <Main
-          collapsed={this.state.collapsed}
-          selectedMenu={()=>{ return this.state.selectedMenu }}
-        />
-      </Layout>
+      <BrowserRouter>
+        <Layout style={{ minHeight: '100vh' }}>
+          <NavSider
+            collapsed={this.state.collapsed}
+            onCollapse={(e) => { me.onCollapse(e) }}
+            selectedMenu={this.state.selectedMenu}
+            selectMenu={(e) => { me.selectMenu(e) }} />
+          <Main
+            collapsed={this.state.collapsed}
+            selectedMenu={() => { return this.state.selectedMenu }}
+          />
+        </Layout>
+      </BrowserRouter>
     );
   }
 }

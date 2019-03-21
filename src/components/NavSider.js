@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom"
 
 import { Layout, Menu, Icon } from 'antd';
 const { Sider } = Layout;
@@ -7,7 +8,13 @@ const SubMenu = Menu.SubMenu;
 
 class NavSider extends Component {
 
+  selectMenu(e){
+    this.props.selectMenu(e)
+    this.props.history.push(`/${e.key}`);
+  }
+
   render() {
+    let me = this;
     return (
       <Sider
         collapsible
@@ -18,7 +25,7 @@ class NavSider extends Component {
         }}
       >
         <div className="logo">Todo List</div>
-        <Menu theme="dark" defaultSelectedKeys={[this.props.selectedMenu]} mode="inline" onClick={this.props.selectMenu}>
+        <Menu theme="dark" defaultSelectedKeys={[this.props.selectedMenu]} mode="inline" onClick={(e)=>{me.selectMenu(e)}}>
           <Menu.Item key="Overview">
             <Icon type="pie-chart" />
             <span>Overview</span>
@@ -27,6 +34,7 @@ class NavSider extends Component {
             <Icon type="profile" />
             <span>Tasks</span>
           </Menu.Item>
+
           <SubMenu
             key="sub1"
             title={<span><Icon type="user" /><span>User</span></span>}
@@ -52,4 +60,5 @@ class NavSider extends Component {
   }
 }
 
-export default NavSider;
+// export default NavSider
+export default withRouter(NavSider);
