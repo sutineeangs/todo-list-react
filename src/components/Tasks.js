@@ -29,7 +29,7 @@ class Tasks extends Component {
   getDoneTaskPercent(){
     let n = this.props.tasks.length
     let s = this.props.tasks.filter((v)=>{ return v.isDone }).length
-    return (s/n)*100
+    return ((s/n)*100).toFixed(2)
   }
 
   render() {
@@ -76,7 +76,7 @@ class Tasks extends Component {
                 rowKey={record => record.id}
                 columns={columns}
                 dataSource={this.props.tasks}
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 8 }}
                 expandedRowRender={record => <DetailTask task={record}/>}
               />
             </Col>
