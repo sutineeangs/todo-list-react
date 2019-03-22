@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { actions as todosActions } from '../redux/reducers/todos';
 
 import moment from 'moment';
-import { Row, Col, Button, Typography, Modal, Input, DatePicker } from 'antd';
+import { Row, Col, Button, Typography, Modal, Input, DatePicker, notification } from 'antd';
 const { Text } = Typography;
 const { TextArea } = Input;
 const uuidv4 = require('uuid/v4');
+notification.config({
+  placement: "bottomRight",
+});
 
 class AddTaskButton extends Component {
   constructor(props) {
@@ -34,8 +37,8 @@ class AddTaskButton extends Component {
       id: uuidv4(),
       subject: "",
       description: "",
-      createdDate: new Date(),
-      dueDate: new Date()
+      createdDate: moment(new Date(), "YYYY-MM-DD"),
+      dueDate: moment(new Date(), "YYYY-MM-DD")
     })
     this.setState({ visible: true })
   }
@@ -45,14 +48,18 @@ class AddTaskButton extends Component {
       id: this.state.id,
       subject: this.state.subject,
       description: this.state.description,
-      createdDate: this.state.createdDate? this.state.createdDate.valueOf(): null,
-      dueDate: this.state.dueDate? this.state.dueDate.valueOf(): null,
+      createdDate: this.state.createdDate ? this.state.createdDate.valueOf() : null,
+      dueDate: this.state.dueDate ? this.state.dueDate.valueOf() : null,
       updatedDate: null,
       isDone: false
     }
-    if(task.subject === "" || task.createdDate === null || task.dueDate === null){ return }
+    if (task.subject === "" || task.createdDate === null || task.dueDate === null) { return }
     this.props.addTask(task);
     this.handleCancel()
+    notification["success"]({
+      message: `Task#${task.subject}`,
+      description: 'add a task success',
+    });
   }
 
   handleCancel(e) {
@@ -61,8 +68,8 @@ class AddTaskButton extends Component {
       id: null,
       subject: null,
       description: null,
-      createdDate: null,
-      dueDate: null,
+      createdDate: moment(new Date(), "YYYY-MM-DD"),
+      dueDate: moment(new Date(), "YYYY-MM-DD"),
     });
   }
 
@@ -75,17 +82,17 @@ class AddTaskButton extends Component {
   };
 
   onChangeCreatedDate(date, dateString) {
-    if(date){
+    if (date) {
       this.setState({ createdDate: date })
-    }else{
+    } else {
       this.setState({ createdDate: null })
     }
   }
 
   onChangeDueDate(date, dateString) {
-    if(date){
+    if (date) {
       this.setState({ dueDate: date })
-    }else{
+    } else {
       this.setState({ dueDate: null })
     }
   }
@@ -93,8 +100,8 @@ class AddTaskButton extends Component {
   render() {
     return <div>
       <Button type="primary" shape="circle" icon="plus" size={'large'}
-        style={{ float: 'right', marginBottom: '20px' }}
         onClick={this.showModal} />
+
       <Modal
         title="Create Task"
         visible={this.state.visible}
@@ -108,19 +115,19 @@ class AddTaskButton extends Component {
           </Col>
           <Col xs={24} sm={24} md={6} lg={6} xl={6} ><Text strong>Subject</Text></Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18} style={{ marginBottom: '10px' }}>
-            <Input placeholder="enter subject" allowClear onChange={this.onChangeSubject} />
+            <Input placeholder="enter subject" allowClear onChange={this.onChangeSubject} value={this.state.subject} />
           </Col>
           <Col xs={24} sm={24} md={6} lg={6} xl={6}><Text strong>Description</Text></Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18} style={{ marginBottom: '10px' }}>
-            <TextArea placeholder="enter description" rows={2} onChange={this.onChangeDescription} />
+            <TextArea placeholder="enter description" rows={2} onChange={this.onChangeDescription} value={this.state.description} />
           </Col>
           <Col xs={24} sm={24} md={6} lg={6} xl={6}><Text strong>Created Date</Text></Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18} style={{ marginBottom: '10px' }}>
-            <DatePicker defaultValue={moment(new Date(), "YYYY-MM-DD")} onChange={this.onChangeCreatedDate} />
+            <DatePicker value={this.state.createdDate} onChange={this.onChangeCreatedDate} />
           </Col>
           <Col xs={24} sm={24} md={6} lg={6} xl={6}><Text strong>Due Date</Text></Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18} style={{ marginBottom: '10px' }}>
-            <DatePicker defaultValue={moment(new Date(), "YYYY-MM-DD")} onChange={this.onChangeDueDate} />
+            <DatePicker value={this.state.dueDate} onChange={this.onChangeDueDate} />
           </Col>
         </Row>
       </Modal>

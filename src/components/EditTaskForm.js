@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { actions as todosActions } from '../redux/reducers/todos';
 
 import moment from 'moment';
-import { Row, Col, Typography, Modal, Input, DatePicker, Icon, Checkbox } from 'antd';
+import { Row, Col, Typography, Modal, Input, DatePicker, Icon, Checkbox, notification } from 'antd';
 const { Text } = Typography;
 const { TextArea } = Input;
-
+notification.config({
+  placement: "bottomRight",
+});
 
 class EditTaskForm extends Component {
   constructor(props) {
@@ -56,6 +58,10 @@ class EditTaskForm extends Component {
     if (task.subject === "" || task.createdDate === null || task.dueDate === null) { return }
     this.props.editTask(task);
     this.handleCancel()
+    notification["success"]({
+      message: `Task#${task.subject}`,
+      description: 'edit a task success',
+    });
   }
 
   handleCancel(e) {
@@ -130,7 +136,7 @@ class EditTaskForm extends Component {
           </Col>
           <Col xs={24} sm={24} md={6} lg={6} xl={6}><Text strong>{" "}</Text></Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18} style={{ marginBottom: '10px' }}>
-            <Checkbox onChange={this.onChangeIsDone}>Done</Checkbox>
+            <Checkbox checked={this.state.isDone} onChange={this.onChangeIsDone}>Done</Checkbox>
           </Col>
         </Row>
       </Modal>
