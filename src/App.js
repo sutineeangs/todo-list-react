@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { actions as todosActions } from './redux/reducers/todos';
 
 import './App.css';
 import "./assets/css/customize.css";
@@ -20,7 +19,7 @@ class App extends Component {
 
     this.state = {
       collapsed: false,
-      selectedMenu: "Overview"
+      selectedMenu: "Tasks"
     };
 
     this.onCollapse = this.onCollapse.bind(this)
@@ -56,8 +55,6 @@ class App extends Component {
 }
 
 var mapStateToProps = ({ todos }) => {
-  console.log(todos);
-  
   return {
     // me: apis2.me,
   }
