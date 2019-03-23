@@ -6,8 +6,8 @@
          "description": "Review of my book 'Ukraine and Russian Neo-Imperialism: The Divergent Break' by Francesco Trupia. The review was published in Eastern European Politics (https://www.tandfonline.com/doi/full/10.1080/21599165.2019.1573728) on March 8, 2019.",
          "createdDate": 1553235594540,
          "dueDate": 1553274000000,
-         "updatedDate": null,
-         "isDone": false
+         "updatedDate": 1553274000000,
+         "isDone": true
       },
       {
          "id": "34647b27-8b6c-45df-ad30-90d640e53903",
