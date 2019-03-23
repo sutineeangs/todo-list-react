@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Today from './Today';
+import FinishedTask from './FinishedTask';
+import UnfinishedTask from './UnfinishedTask';
+
 import { Layout, Row, Col, Progress, Statistic, Card, Icon } from 'antd';
 const { Content } = Layout;
 
@@ -10,7 +14,7 @@ class Overview extends Component {
   getDoneTaskPercent() {
     let n = this.props.tasks.length
     let s = this.props.tasks.filter((v) => { return v.isDone }).length
-    return ((s / n) * 100).toFixed(2)
+    return parseFloat(((s / n) * 100).toFixed(2))
   }
 
   getNumberOfFinishedTasks(){
@@ -51,11 +55,14 @@ class Overview extends Component {
                 suffix={`/ ${this.props.tasks.length}`} />
               </Card>
             </Col>
-            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingTop: '40px' }}>
-              Notification
-            </Col> */}
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingTop: '40px' }}>
-              Calendar
+              <Today />
+            </Col>
+           <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ paddingTop: '20px' }}>
+              <FinishedTask />
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ paddingTop: '20px' }}>
+              <UnfinishedTask />
             </Col>
           </Row>
         </div>

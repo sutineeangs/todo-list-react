@@ -8,15 +8,16 @@ import DetailTask from "./DetailTask"
 
 import _ from "underscore";
 import moment from 'moment';
-import { Layout, Row, Col, Table, Divider, Icon, Checkbox, Progress } from 'antd';
+import { Layout, Row, Col, Table, Divider, Icon, Checkbox, Progress, Input } from 'antd';
 const { Content } = Layout;
-
+const Search = Input.Search;
 
 class Tasks extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      search: ""
     }
     this.onChangeIsDone = this.onChangeIsDone.bind(this)
   }
@@ -26,10 +27,25 @@ class Tasks extends Component {
     this.props.editTask(task)
   }
 
-  getDoneTaskPercent(){
+  getDoneTaskPercent() {
     let n = this.props.tasks.length
-    let s = this.props.tasks.filter((v)=>{ return v.isDone }).length
-    return ((s/n)*100).toFixed(2)
+    let s = this.props.tasks.filter((v) => { return v.isDone }).length
+    return parseFloat(((s / n) * 100).toFixed(2))
+  }
+
+  getTasks() {
+    let tasks = []
+    let filter = this.state.search
+    if (filter === null || filter === "") {
+      tasks = _.map(this.props.tasks, (v) => { return v })
+    }else{
+      tasks = this.props.tasks.filter((v)=>{
+        let subject = v.subject.toLowerCase()
+        let dueDate = moment(new Date(v.dueDate), "YYYY-MM-DD").format("dddd, MMMM DD YYYY").toLowerCase()
+        return (subject.indexOf(filter) > -1) || (dueDate.indexOf(filter) > -1)
+      })
+    }
+    return tasks
   }
 
   render() {
@@ -65,19 +81,24 @@ class Tasks extends Component {
           <Row gutter={16}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <div style={{ marginBottom: '20px', float: 'right', display: 'flex', flexDirection: 'row' }}>
+                <Search
+                  placeholder="search by subject / due date"
+                  onSearch={value => me.setState({ search: value.toLowerCase() })}
+                  style={{ width: 300, marginRight: 20 }}
+                />
                 <AddTaskButton />
               </div>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: '0px 15px 15px 15px'}} >
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '0px 15px 15px 15px' }} >
               <Progress percent={this.getDoneTaskPercent()} />
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <Table
                 rowKey={record => record.id}
                 columns={columns}
-                dataSource={this.props.tasks}
+                dataSource={this.getTasks()}
                 pagination={{ pageSize: 8 }}
-                expandedRowRender={record => <DetailTask task={record}/>}
+                expandedRowRender={record => <DetailTask task={record} />}
               />
             </Col>
           </Row>

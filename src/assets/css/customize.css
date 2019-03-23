@@ -4,3 +4,45 @@
   padding: 20px;
   font-weight: bold;
 }
+
+.events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.events .ant-badge-status {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.notes-month {
+  text-align: center;
+  font-size: 28px;
+}
+.notes-month section {
+  font-size: 28px;
+}
+
+.today-header .ant-list-header{
+  background-color: #f3f3f3;
+}
+.finish-header .ant-list-header{
+  background-color: rgba(82, 196, 26, 0.45);
+}
+.finish-header.ant-list-bordered{
+  border-color: rgba(82, 196, 26, 0.45);
+}
+.finish-header.ant-list-bordered .ant-list-item{
+  border-bottom-color: rgba(82, 196, 26, 0.45);
+}
+.unfinish-header .ant-list-header{
+  background-color: rgba(245, 34, 45, 0.45);
+}
+.unfinish-header.ant-list-bordered{
+  border-color: rgba(245, 34, 45, 0.45);
+}
+.unfinish-header.ant-list-bordered .ant-list-item{
+  border-bottom-color: rgba(245, 34, 45, 0.45);
+}

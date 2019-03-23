@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import { actions as todosActions } from './redux/reducers/todos';
 
 import './App.css';
 import "./assets/css/customize.css";
@@ -24,6 +25,11 @@ class App extends Component {
 
     this.onCollapse = this.onCollapse.bind(this)
     this.selectMenu = this.selectMenu.bind(this)
+  }
+
+  componentDidMount() {
+    const INPUT_DATA_JSON = require('./data/input.json');
+    this.props.setTasks(INPUT_DATA_JSON.tasks? INPUT_DATA_JSON.tasks: [])
   }
 
   onCollapse(collapsed) {
@@ -56,15 +62,14 @@ class App extends Component {
 
 var mapStateToProps = ({ todos }) => {
   return {
-    // me: apis2.me,
   }
 }
 
 var mapDispatchToProps = function (dispatch) {
   return {
-    // getMessages: function (data) {
-    //   return dispatch(apis2Actions.getMessages(data));
-    // },
+    setTasks: function (tasks) {
+      return dispatch(todosActions.setTasks(tasks));
+    },
   };
 };
 
